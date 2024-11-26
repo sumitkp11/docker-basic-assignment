@@ -1,0 +1,40 @@
+service:
+  web:
+    # the web service definition here
+    image: node:lts-alpine
+    command: sh -c "yarn install && yarn run dev"
+    ports:
+      - 127.0.0.1:3000:3000
+    working_dir: /app
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+      MYSQL_DB: mydatabase
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - docker-basic-network
+
+  mysql:
+    # the database service definition here
+    image: mysql:8.0
+    container_image: basic-mysql-container
+    ports:
+      - "3306:3306"
+    networks:
+      - docker-basic-network
+
+  redis:
+    # the cache service definition here
+    image: redis:latest
+    container_name: basic-redis-container
+    ports:
+      - "6379:6379"
+    networks:
+      - docker-basic-network
+
+networks:
+  docker-basic-network:
+    driver: bridge
