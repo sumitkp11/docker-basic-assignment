@@ -1,4 +1,4 @@
-service:
+services:
   web:
     # the web service definition here
     image: node:lts-alpine
@@ -20,7 +20,7 @@ service:
   mysql:
     # the database service definition here
     image: mysql:8.0
-    container_image: basic-mysql-container
+    container_name: basic-mysql-container
     ports:
       - "3306:3306"
     networks:
